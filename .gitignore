@@ -1,0 +1,28 @@
+# Ignore node_modules for root, client, and server
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Ignore .env files for root, client, and server
+.env
+client/.env
+server/.env
+
+# Optional: OS and editor related ignores
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore build artifacts (optional)
+dist/
+build/
+client/dist/
+client/build/
+server/dist/
+server/build/
