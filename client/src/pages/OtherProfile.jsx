@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { User, Calendar, CheckCircle } from 'lucide-react';
+import { User, Calendar, CheckCircle, XCircle } from 'lucide-react';
 
 import { formatDate } from '../lib/dateFormat';
 import { useParams } from 'react-router-dom';
@@ -16,7 +16,7 @@ export default function OtherProfile() {
     createdAt: "",
   });
   const { fullName, email, createdAt, profilePic, lastLoginAt } = userDetails;
-  const isInactive = new Date() - new Date(lastLoginAt) > 30 * 24 * 60 * 60 * 1000;
+  const isInactive = new Date() - new Date(lastLoginAt) > (30 * 24 * 60 * 60 * 1000);
   const formattedTime = formatDate(new Date(lastLoginAt));
 
   const { id } = useParams();

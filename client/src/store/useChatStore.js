@@ -65,6 +65,14 @@ export const useChatStore = create((set, get) => ({
         messages: [...get().messages, newMessage],
       });
     });
+
+    socket.on("messageEdited", ({ messageId, newText }) => {
+      set((state) => ({
+        messages: state.messages.map((message) =>
+          message._id === messageId ? { ...message, text: newText } : message
+        ),
+      }));
+    });
   },
   unsubscribeFromMessages: () => {
     const socket = useAuth.getState().socket;

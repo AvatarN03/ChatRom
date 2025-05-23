@@ -1,0 +1,7 @@
+MONGODB_URI= your mongodb url
+JWT_SECRET= ex.Cheetah
+PORT= 5000
+CLOUDINARY_CLOUDNAME= your cloudinary cloud name
+CLOUDINARY_PUBLICKEY= your Cloudinary Public key
+CLOUDINARY_SECRETKEY= You're cloudini secret key
+CLIENT_URL= http://localhost:5173

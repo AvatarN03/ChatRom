@@ -8,8 +8,6 @@ import NoChatBox from '../components/NoChatBox.jsx';
 const HomePage = () => {
   const { selectedUser } = useChatStore();
 
-
-
   return (
     <div className="flex h-screen bg-gray-700 overflow-hidden">
       {/* Sidebar */}

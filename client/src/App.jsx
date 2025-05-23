@@ -8,29 +8,21 @@ import { Toaster } from "react-hot-toast"
 import { useChatStore } from './store/useChatStore.js';
 import OtherProfile from './pages/OtherProfile.jsx';
 
-
 const App = () => {
-
   const { authUser, checkUser, isCheckingAuth, onlineUsers } = useAuth();
   const { setSelectedUser } = useChatStore();
-
   
-
-
   const handleWindow = (event) => {
     if (event.key === "Escape") {
       setSelectedUser(null);
-    }
-  };
+    }  };
 
   useEffect(() => {
     window.addEventListener("keydown", handleWindow);
-
     return () => {
       window.removeEventListener("keydown", handleWindow);
     };
   }, []);
-
 
   useEffect(() => {
     checkUser();
@@ -60,7 +52,6 @@ const App = () => {
       </Routes>
       <Toaster />
     </div>
-  )
-}
+  )}
 
 export default App

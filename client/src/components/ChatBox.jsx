@@ -6,7 +6,7 @@ import { formatTime } from '../lib/dateFormat';
 import useAuth from '../store/useAuth';
 import { ChevronDown, CrossIcon } from 'lucide-react';
 import MessageSkeleton from './MessageSkeleton';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ChatBox = () => {
 
@@ -67,7 +67,7 @@ const ChatBox = () => {
     subscribeToMessages()
 
     return () => unsubscribeFromMessages()
-  }, [selectedUser?._id, getMessages, subscribeToMessages, unsubscribeFromMessages, navigate])
+  }, [selectedUser?._id, getMessages, subscribeToMessages, unsubscribeFromMessages])
 
   useEffect(() => {
     if (messageRef.current && messages) {
