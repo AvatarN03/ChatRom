@@ -1,4 +1,4 @@
-````markdown
+
 # 💬 MERN Chat App - CHATROM
 
 A real-time chat application built with the MERN stack (MongoDB, Express, React, Node.js), powered by **Socket.IO** for WebSocket-based messaging and **Zustand** for lightweight global state management on the client side.
@@ -21,7 +21,7 @@ A real-time chat application built with the MERN stack (MongoDB, Express, React,
 ![Server tree](https://github.com/user-attachments/assets/589c73e8-2a1d-4523-bc10-dabbda5d025d)
 ![Client tree](https://github.com/user-attachments/assets/a78fafd1-3939-4571-b43a-7e6314b2c29a)
 
-
+---
 
 ## 🏗️ Tech Stack
 
@@ -102,4 +102,4 @@ This project is licensed under the [MIT License](LICENSE).
 **Your Name**
 [LinkedIn](https://www.linkedin.com/in/prashanth-naidu03/)
 
-```
+
