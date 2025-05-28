@@ -52,18 +52,17 @@ export const useChatStore = create((set, get) => ({
   },
   subscribeToMessages: () => {
     const { selectedUser } = get();
-    if (!selectedUser) return;
-
     const socket = useAuth.getState().socket;
+    if (!selectedUser || !socket) return;
+
+    socket.off("newMessage");
+    socket.off("messageEdited");
+    socket.off("messageDeleted");
 
     socket.on("newMessage", (newMessage) => {
-      const isMessageSentFromSelectedUser =
-        newMessage.senderId === selectedUser._id;
-      if (!isMessageSentFromSelectedUser) return;
-
-      set({
-        messages: [...get().messages, newMessage],
-      });
+      if (newMessage.senderId === selectedUser._id) {
+        set({ messages: [...get().messages, newMessage] });
+      }
     });
 
     socket.on("messageEdited", ({ messageId, newText }) => {
@@ -73,10 +72,25 @@ export const useChatStore = create((set, get) => ({
         ),
       }));
     });
+
+   socket.on("messageDeleted", (messageId) => {
+  const existed = get().messages.some((m) => m._id === messageId);
+
+  if (!existed) {
+    get().getMessages(get().selectedUser?._id);
+  } else {
+    set((state) => ({
+      messages: state.messages.filter((message) => message._id !== messageId),
+    }));
+  }
+});
+
   },
   unsubscribeFromMessages: () => {
     const socket = useAuth.getState().socket;
     socket.off("newMessage");
+    socket.off("messageEdited");
+    socket.off("messageDeleted");
   },
   updateEditedMessage: async (messageId, newText) => {
     try {
@@ -102,11 +116,15 @@ export const useChatStore = create((set, get) => ({
   onDeleteMessage: async (messageId) => {
     try {
       await axiosInstance.delete(`/messages/${messageId}`);
+
+      const socket = useAuth.getState().socket;
+      socket.emit("messageDeleted", messageId); // Emit event to notify others
+
       set((state) => ({
         messages: state.messages.filter((message) => message._id !== messageId),
       }));
     } catch (error) {
-      toast.error(error.response.data.messages);
+      toast.error(error.response?.data?.messages || error.message);
     }
   },
 }));

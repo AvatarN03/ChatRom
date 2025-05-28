@@ -26,13 +26,21 @@ const ChatBox = () => {
 
   };
 
+  const editInputRef = useRef(null);
+
+  useEffect(() => {
+    if (editInputRef.current) {
+      editInputRef.current.focus();
+    }
+  }, [editingMessage]);
+
+
   const handleSaveEdit = async () => {
     if (!editingMessage) return;
 
-     
-      await updateEditedMessage(editingMessage._id, editText.trim());
-      getMessages(selectedUser._id);
-      setEditingMessage(null);
+
+    await updateEditedMessage(editingMessage._id, editText.trim());
+    setEditingMessage(null);
   };
 
 
@@ -72,7 +80,7 @@ const ChatBox = () => {
   useEffect(() => {
     if (messageRef.current && messages) {
 
-      messageRef.current.scrollIntoView({ behaviour: "smoth" })
+      messageRef.current.scrollIntoView({ behaviour: "smooth" })
     }
   }, [messages, selectedUser])
 
@@ -92,7 +100,7 @@ const ChatBox = () => {
       {/* Chat Header */}
       <div className="p-4 border-b flex justify-between items-center border-gray-600 bg-gray-800">
         {/* <Link to={selectedUser._id}> */}
-        <div className="flex items-center" onClick={() => roter()}>
+        <div className="flex items-center cursor-pointer" onClick={() => roter()}>
           <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-medium mr-3 overflow-hidden">
             <img src={selectedUser.profilePic || "/avatar.svg"} alt="" className='w-full h-full object-cover' />
           </div>
@@ -137,7 +145,7 @@ const ChatBox = () => {
                 <div className="mr-2">
                   <div className="w-8 md:w-12 aspect-square overflow-hidden rounded-full border">
                     <img
-                      src={selectedUser.profilePic || "/avatar.svg"}
+                      src={selectedUser?.profilePic || "/avatar.svg"}
                       alt="profile pic"
                       className="w-full h-full object-cover"
                     />
@@ -202,7 +210,7 @@ const ChatBox = () => {
                 <div className="ml-2">
                   <div className="w-8 md:w-12 aspect-square rounded-full border overflow-hidden">
                     <img
-                      src={authUser.profilePic || "/avatar.svg"}
+                      src={authUser?.profilePic || "/avatar.svg"}
                       alt="profile pic"
                       className="w-full h-full object-cover"
                     />
@@ -220,35 +228,33 @@ const ChatBox = () => {
 
 
       <MessageInput />
-      {editingMessage && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md text-white">
-            <h3 className="text-lg font-semibold mb-4">Edit Message</h3>
-            <textarea
-              className="w-full p-2 rounded bg-gray-800 text-white resize-none"
-              rows={4}
-              value={editText}
-              onChange={(e) => setEditText(e.target.value)}
-            />
-            <div className="mt-4 flex justify-end space-x-3">
-              <button
-                onClick={() => setEditingMessage(null)}
-                className="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSaveEdit
-                }
-                className="px-4 py-2 rounded bg-indigo-600 hover:bg-indigo-500"
-                disabled={editText.trim().length === 0}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+     {editingMessage && (
+  <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-800 p-4 rounded-md shadow-md w-full max-w-md z-50">
+    <input
+      ref={editInputRef}
+      type="text"
+      value={editText}
+      onChange={(e) => setEditText(e.target.value)}
+      className="w-full p-2 rounded-md border bg-gray-900 text-white"
+      placeholder="Edit message"
+    />
+    <div className="flex justify-end space-x-2 mt-2">
+      <button
+        className="px-4 py-1 bg-indigo-600 text-white rounded-md"
+        onClick={handleSaveEdit}
+      >
+        Save
+      </button>
+      <button
+        className="px-4 py-1 bg-gray-600 text-white rounded-md"
+        onClick={() => setEditingMessage(null)}
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+
 
     </>
   )

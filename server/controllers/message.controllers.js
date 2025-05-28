@@ -96,8 +96,6 @@ export const updateMessage = async (req, res) => {
     }
 
     return res.status(200).json(updatedMessage);
-
-    return res.status(200).json(updatedMessage);
   } catch (error) {
     console.log("Error in updating message: " + error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -111,6 +109,16 @@ export const deleteMessage = async (req, res) => {
     const deletedMessage = await Message.findByIdAndDelete(messageId);
     if (!deletedMessage) {
       return res.status(404).json({ message: "Message not found" });
+    }
+    let receiverSocketId;
+    if (deletedMessage.receiverId) {
+      console.log("first")
+      receiverSocketId = getReceiverSocketId(deletedMessage.receiverId.toString());
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("messageDeleted", {
+          messageId: deletedMessage._id,
+        });
+      }
     }
     return res.status(200).json({ message: "Message deleted successfully" });
   } catch (error) {

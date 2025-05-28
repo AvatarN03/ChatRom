@@ -59,7 +59,7 @@ const Sidebar = () => {
                 // ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}
               `}
             >
-              <img src={user.profilePic || "/avatar.svg"} alt="" className="w-8 md:w-12 aspect-square rounded-full border-2" />
+              <img src={user.profilePic || "/avatar.svg"} alt="" className="w-8 md:w-12 aspect-square object-cover rounded-full border-2" />
               <p className="hidden md:block line-clamp-1" >{user.fullName}</p>
 
               </button>
