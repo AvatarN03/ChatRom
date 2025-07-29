@@ -47,7 +47,7 @@ A full-featured real-time chat application built with the MERN stack (MongoDB, E
 
 ---
 
-*Client Directory Structure*
+*Client Directory Structure* <br/>
 ![Client tree](https://github.com/user-attachments/assets/a78fafd1-3939-4571-b43a-7e6314b2c29a)
 
 ---
